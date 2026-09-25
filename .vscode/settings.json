@@ -1,0 +1,4 @@
+{
+    "python.defaultInterpreterPath": "/Users/exiled/Desktop/python_qa/venv/bin/python",
+    "python-envs.defaultEnvManager": "ms-python.python:system"
+}
