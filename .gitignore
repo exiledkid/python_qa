@@ -4,3 +4,4 @@
 __pycache__/
 repomix-output.xml
 *.db
+allure-results/

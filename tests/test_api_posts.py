@@ -1,0 +1,31 @@
+from api.post_client import PostApiClient
+from api.post import PostModel
+from faker import Faker
+
+def test_get_post_contract(api_client):
+    response = api_client.get_post_by_id(1)
+    assert response.status_code == 200
+
+    response_json = response.json()
+    validated_response = PostModel(**response_json)
+    assert validated_response.id == 1
+
+def test_create_post(api_client, faker: Faker):
+    title = faker.word()
+    body = faker.sentence()
+    userId = 1
+
+    payload = {
+        'title': title,
+        'body': body,
+        'userId': 1
+    }
+
+    response = api_client.add_post(payload)
+    assert response.status_code == 201
+    validated_response = PostModel(**response.json())
+    assert validated_response.userId == userId
+    assert validated_response.title == title
+    assert validated_response.body == body
+
+

@@ -31,6 +31,18 @@ class DbClient:
         # fetchone() забирает одну найденную строку из базы
         return self.cursor.fetchone()
 
+    def delete_post_by_id(self, post_id: int):
+        query = 'DELETE FROM posts where id = ?'
+
+        self.cursor.execute(query, (post_id,))
+        self.connection.commit()
+
+    def update_post_title(self, post_id: int, new_title: str):
+        query = 'UPDATE posts SET title = ? Where id = ?'
+
+        self.cursor.execute(query, (new_title, post_id))
+        self.connection.commit()
+
 # --- ПРОВЕРКА МЕХАНИКИ ---
 if __name__ == '__main__':
     db = DbClient()

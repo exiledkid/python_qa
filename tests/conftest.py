@@ -1,11 +1,28 @@
-import os
 import pytest
+from db.db_client import DbClient
 from api.post_client import PostApiClient
-from dotenv import load_dotenv
+from core.settings import Settings
 
-load_dotenv()
+def pytest_addoption(parser):
+    parser.addoption(
+        '--env', 
+        action='store', 
+        default='dev', 
+        help='Указывает окружение для запуска тестов (dev или stage)'
+    )
 
 @pytest.fixture
-def post_client():
-    base_url = os.environ['BASE_URL']
-    return PostApiClient(base_url)
+def settings(request):
+    flag_name = request.config.getoption('--env')
+    return Settings(_env_file=f'.env.{flag_name}')
+
+@pytest.fixture
+def api_client(settings):
+    client = PostApiClient(settings.base_url)
+    return client
+
+@pytest.fixture
+def db_client():
+    db = DbClient()
+    db.create_posts_table()
+    return db
