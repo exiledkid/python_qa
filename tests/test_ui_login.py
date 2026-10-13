@@ -2,12 +2,9 @@ import pytest
 import re
 from playwright.sync_api import expect
 
-def test_login_success(page):
-    page.goto('https://www.saucedemo.com/')
-
-    page.get_by_placeholder('Username').fill('standard_user')
-    page.get_by_placeholder('Password').fill('secret_sauce')
-    page.get_by_role('button', name='login').click()
+def test_login_success(login_page, page):
+    login_page.open()
+    login_page.login('standard_user', 'secret_sauce')
 
     expect(page).to_have_url(re.compile('inventory'))
     expect(page.locator('[data-test="title"]')).to_be_visible()
@@ -23,12 +20,9 @@ def test_login_success(page):
     ('standard_user', '', 'Epic sadface: Password is required'),
     ('locked_out_user', 'secret_sauce', 'Epic sadface: Sorry, this user has been locked out.')
 ], ids=['Incorrect password', 'Incorrect login', 'Password required', 'Blocked user'])
-def test_auth_fail(page, login, password, exp_error):
-    page.goto('https://www.saucedemo.com/')
-
-    page.get_by_placeholder('Username').fill(login)
-    page.get_by_placeholder('Password').fill(password)
-    page.get_by_role('button', name='login').click()
+def test_auth_fail(login_page, page, login, password, exp_error):
+    login_page.open()
+    login_page.login(login, password)
 
     expect(page.locator('[data-test="error"]')).to_be_visible()
     expect(page.locator('[data-test="error"]')).to_have_text(exp_error)
