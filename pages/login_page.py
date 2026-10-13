@@ -15,7 +15,7 @@ class LoginPage():
 
             allure.attach(
                 body=self.page.screenshot(),
-                name='Скриншот страницы при падении теста',
+                name='Страница после нажатия Login',
                 attachment_type=allure.attachment_type.PNG
             )
 
