@@ -1,5 +1,5 @@
 # Файл: core/sanitizer.py
-SENSITIVE_KEYS = ('password', 'token', 'authorization', 'secret', 'x-api-key', 'cookie', 'session_id')
+SENSITIVE_KEYS = ('password', 'token', 'authorization', 'secret', 'x-api-key', 'cookie', 'set-cookie', 'session_id')
 
 def sanitize_data(data):
     if isinstance(data, list):
