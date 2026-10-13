@@ -3,6 +3,7 @@ from db.db_client import DbClient
 from api.post_client import PostApiClient
 from core.settings import Settings
 from pages.login_page import LoginPage
+from pages.products_page import ProductsPage
 
 
 def pytest_addoption(parser):
@@ -32,3 +33,7 @@ def db_client():
 @pytest.fixture()
 def login_page(page):
     return LoginPage(page)
+
+@pytest.fixture
+def products_page(page):
+    return ProductsPage(page)
