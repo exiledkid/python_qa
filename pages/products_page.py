@@ -22,3 +22,8 @@ class ProductsPage:
         with allure.step(title='Нажатие на корзину'):
             self.page.locator('[data-test="shopping-cart-link"]').click()
     
+    def get_title(self):
+        return self.page.locator('[data-test="title"]')
+
+    def get_inventory_items(self):
+        return self.page.locator('[data-test="inventory-item"]')

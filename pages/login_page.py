@@ -19,4 +19,6 @@ class LoginPage:
                 attachment_type=allure.attachment_type.PNG
             )
 
+    def get_error(self):
+        return self.page.locator('[data-test="error"]')
     
