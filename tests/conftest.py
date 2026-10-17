@@ -37,7 +37,11 @@ def api_client(settings):
 def db_client():
     db = DbClient()
     db.create_posts_table()
-    return db
+
+    yield db
+
+    db.clear_posts()
+    db.close()
 
 @pytest.fixture
 def login_page(page):

@@ -46,6 +46,17 @@ class DbClient:
         self.cursor.execute(query, (new_title, post_id))
         self.connection.commit()
 
+    def clear_posts(self):
+        query = 'DELETE FROM posts'
+
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def close(self):
+        self.connection.close()
+
+
+
 # --- ПРОВЕРКА МЕХАНИКИ ---
 if __name__ == '__main__':
     db = DbClient()
