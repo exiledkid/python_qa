@@ -1,6 +1,6 @@
-from api.post_client import PostApiClient
 from api.post import PostModel
 from faker import Faker
+import pytest
 
 def test_get_post_contract(api_client):
     response = api_client.get_post_by_id(1)
@@ -18,7 +18,7 @@ def test_create_post(api_client, faker: Faker):
     payload = {
         'title': title,
         'body': body,
-        'userId': 1
+        'userId': userId
     }
 
     response = api_client.add_post(payload)
@@ -28,4 +28,8 @@ def test_create_post(api_client, faker: Faker):
     assert validated_response.title == title
     assert validated_response.body == body
 
+@pytest.mark.parametrize('post_id', [0, -1, 101, 'abc'],ids=['Id zero', 'Id negative number', 'Id above max', 'Id letters'])
+def test_get_post_not_found(api_client, post_id):
+    response = api_client.get_post_by_id(post_id)
 
+    assert response.status_code == 404
