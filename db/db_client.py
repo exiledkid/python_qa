@@ -56,7 +56,6 @@ class DbClient:
         self.connection.close()
 
 
-
 # --- ПРОВЕРКА МЕХАНИКИ ---
 if __name__ == '__main__':
     db = DbClient()

@@ -35,7 +35,7 @@ def test_db_update_post(db_client):
 
     new_title = 'Заменённый заголовок 3'
     db_client.update_post_title(post_id, new_title)
-    
+
     assert db_client.get_post_by_id(post_id)[1] == new_title
 
 
