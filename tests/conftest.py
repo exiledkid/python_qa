@@ -10,6 +10,9 @@ from pages.checkout_step_two_page import CheckoutStepTwoPage
 from pages.checkout_complete_page import CheckoutCompletePage
 import re
 from playwright.sync_api import expect
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent.parent
 
 
 def pytest_addoption(parser):
@@ -23,7 +26,7 @@ def pytest_addoption(parser):
 @pytest.fixture
 def settings(request):
     flag_name = request.config.getoption('--env')
-    return Settings(_env_file=f'.env.{flag_name}')
+    return Settings(_env_file=ROOT_DIR / f'.env.{flag_name}')
 
 @pytest.fixture
 def api_client(settings):
@@ -75,3 +78,4 @@ def opened_checkout_step_one_page(page, login_page, products_page, cart_page, ch
     expect(page).to_have_url(re.compile('checkout-step-one'))
 
     return checkout_step_one_page
+

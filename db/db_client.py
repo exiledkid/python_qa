@@ -1,7 +1,10 @@
 import sqlite3
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).parent.parent
 
 class DbClient:
-    def __init__(self, db_path='test_data.db'):
+    def __init__(self, db_path=ROOT_DIR / 'test_data.db'):
         self.connection = sqlite3.connect(db_path)
         self.cursor = self.connection.cursor()
 
