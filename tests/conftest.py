@@ -8,6 +8,8 @@ from pages.cart_page import CartPage
 from pages.checkout_step_one_page import CheckoutStepOnePage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
 from pages.checkout_complete_page import CheckoutCompletePage
+import re
+from playwright.sync_api import expect
 
 
 def pytest_addoption(parser):
@@ -57,3 +59,19 @@ def checkout_step_two_page(page):
 @pytest.fixture
 def checkout_complete_page(page):
     return CheckoutCompletePage(page)
+
+@pytest.fixture
+def opened_checkout_step_one_page(page, login_page, products_page, cart_page, checkout_step_one_page):
+    login_page.open()
+    login_page.login('standard_user', 'secret_sauce')
+
+    products_page.add_to_cart('sauce-labs-backpack')
+    products_page.open_cart()
+
+    expect(page).to_have_url(re.compile('cart'))
+
+    cart_page.checkout()
+
+    expect(page).to_have_url(re.compile('checkout-step-one'))
+
+    return checkout_step_one_page
