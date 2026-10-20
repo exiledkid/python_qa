@@ -11,6 +11,7 @@ from pages.checkout_complete_page import CheckoutCompletePage
 import re
 from playwright.sync_api import expect
 from pathlib import Path
+from api.user_client import UserApiClient
 
 ROOT_DIR = Path(__file__).parent.parent
 
@@ -30,8 +31,7 @@ def settings(request):
 
 @pytest.fixture
 def api_client(settings):
-    client = PostApiClient(settings.base_url)
-    return client
+    return PostApiClient(settings.base_url) 
 
 @pytest.fixture
 def db_client():
@@ -83,3 +83,6 @@ def opened_checkout_step_one_page(page, login_page, products_page, cart_page, ch
 
     return checkout_step_one_page
 
+@pytest.fixture
+def user_api_client(settings):
+    return UserApiClient(settings.base_url)
