@@ -1,4 +1,3 @@
-# Файл: core/sanitizer.py
 SENSITIVE_KEYS = ('password', 'token', 'authorization', 'secret', 'x-api-key', 'cookie', 'set-cookie', 'session_id')
 
 def sanitize_data(data):
@@ -7,9 +6,16 @@ def sanitize_data(data):
     if not isinstance(data, dict):
         return data
 
-    sanitized = {}
+    sanitized = {}    
     for key, value in data.items():
-        if str(key).lower() in SENSITIVE_KEYS:
+        is_sensitive = False
+
+        for word in SENSITIVE_KEYS:
+            if word in str(key).lower():
+                is_sensitive = True
+                break
+
+        if is_sensitive:
             sanitized[key] = '***MASKED***'
         elif isinstance(value, (list, dict)):
             sanitized[key] = sanitize_data(value)
@@ -22,21 +28,16 @@ if __name__ == '__main__':
     test_dict = {
         'title': 'test title',
         'body': 'test body',
-        'password': 'super_secret_123',
+        'user_password': '1337',
         'name': {
             'surname': 'alexandrov',
-            'name': 'anton'
+            'super_mega_password': 'lord1312'
         },
-        'test': [1, 2, 3]
+        'alex': [{'user': 'alex'}, {'hidden_token': '13123123123'}],
+        'test': [1, 2, 3],
+        'Authorization': 'Bearer',
+        'api_token': 'taieiq0tiosd12'
     }
 
     filtered_dict = sanitize_data(test_dict)
     print(filtered_dict)
-
-
-# --- БЛОК ДЛЯ САМОПРОВЕРКИ ---
-# Если файл запущен напрямую (if __name__ == '__main__'):
-# 1. Создай тестовый словарь, в котором есть обычные поля, 
-#    секретное поле на верхнем уровне, список словарей и вложенный словарь с секретами.
-# 2. Прогони этот словарь через функцию.
-# 3. Распечатай результат и убедись, что все пароли скрыты, а структура не сломалась.
