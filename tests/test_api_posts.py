@@ -33,3 +33,11 @@ def test_get_post_not_found(api_client, post_id):
     response = api_client.get_post_by_id(post_id)
 
     assert response.status_code == 404
+
+@pytest.mark.xfail(reason='Test server accepts empty payload bug')
+def test_create_post_empty_payload(api_client):
+    payload = {}
+
+    response = api_client.add_post(payload)
+
+    assert response.status_code == 400
