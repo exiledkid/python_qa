@@ -10,4 +10,4 @@ def test_click_for_prompt(page):
     page.goto('https://the-internet.herokuapp.com/javascript_alerts')
     page.once('dialog', lambda dialog: dialog.accept('Nikita'))
     page.get_by_role('button', name='Click for JS Prompt').click()
-    expect(page.locator('#result')).to_contain_text('Nikita')
+    expect(page.locator('#result')).to_have_text('You entered: Nikita')
