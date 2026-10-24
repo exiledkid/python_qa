@@ -1,4 +1,6 @@
 from playwright.sync_api import expect
+
+
 def test_click_for_confirm(page):
     page.goto('https://the-internet.herokuapp.com/javascript_alerts')
     page.once('dialog', lambda dialog: dialog.accept())
@@ -6,8 +8,18 @@ def test_click_for_confirm(page):
 
     expect(page.locator('#result')).to_have_text('You clicked: Ok')
 
+
 def test_click_for_prompt(page):
     page.goto('https://the-internet.herokuapp.com/javascript_alerts')
     page.once('dialog', lambda dialog: dialog.accept('Nikita'))
     page.get_by_role('button', name='Click for JS Prompt').click()
     expect(page.locator('#result')).to_have_text('You entered: Nikita')
+
+
+def test_click_for_alert(page):
+    page.goto('https://the-internet.herokuapp.com/javascript_alerts')
+    page.once('dialog', lambda dialog: dialog.accept())
+    page.get_by_role('button', name='Click for JS Alert').click()
+
+    expect(page.locator('#result')).to_have_text('You successfully clicked an alert')
+    
