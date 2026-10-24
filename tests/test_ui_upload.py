@@ -9,3 +9,4 @@ def test_upload(page):
     page.locator('#file-submit').click()
 
     expect(page.locator('#uploaded-files')).to_have_text('upload_test.txt')
+    expect(page.locator('.example h3')).to_have_text('File Uploaded!')
