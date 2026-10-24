@@ -22,3 +22,4 @@ def test_click_for_alert(page):
     page.get_by_role('button', name='Click for JS Alert').click()
 
     expect(page.locator('#result')).to_have_text('You successfully clicked an alert')
+    
