@@ -19,3 +19,11 @@ def test_hides_loading_on_server_error(page):
     page.goto(PAGE_URL)
 
     expect(page.get_by_text('Loading...')).not_to_be_visible()
+
+
+@pytest.mark.xfail(reason='Page does not handle no response from server: infinite loading')
+def test_hides_loading_on_network_error(page):
+    page.route(FRUITS_API_URL, lambda route: route.abort())
+    page.goto(PAGE_URL)
+
+    expect(page.get_by_text('Loading...')).not_to_be_visible()
