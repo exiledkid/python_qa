@@ -27,3 +27,19 @@ def test_hides_loading_on_network_error(page):
     page.goto(PAGE_URL)
 
     expect(page.get_by_text('Loading...')).not_to_be_visible()
+
+
+def add_fruit_to_response(route):
+    response = route.fetch()
+    response_data = response.json()
+    fruit = {'name': 'Veryberry', 'id': 228}
+    response_data.append(fruit)
+    route.fulfill(response=response, json=response_data)
+
+
+def test_page_shows_real_and_added_fruit(page):
+    page.route(FRUITS_API_URL, add_fruit_to_response)
+    page.goto(PAGE_URL)
+
+    expect(page.get_by_text('Veryberry')).to_be_visible()
+    expect(page.get_by_text('Strawberry')).to_be_visible()
