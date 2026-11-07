@@ -12,15 +12,16 @@ import re
 from playwright.sync_api import expect
 from pathlib import Path
 from api.user_client import UserApiClient
+from pages.dynamic_controls_page import DynamicControlsPage
 
 ROOT_DIR = Path(__file__).parent.parent
 
 
 def pytest_addoption(parser):
     parser.addoption(
-        '--env', 
-        action='store', 
-        default='dev', 
+        '--env',
+        action='store',
+        default='dev',
         help='Указывает окружение для запуска тестов (dev или stage)'
     )
 
@@ -31,7 +32,7 @@ def settings(request):
 
 @pytest.fixture
 def api_client(settings):
-    return PostApiClient(settings.base_url) 
+    return PostApiClient(settings.base_url)
 
 @pytest.fixture
 def db_client():
@@ -86,3 +87,7 @@ def opened_checkout_step_one_page(page, login_page, products_page, cart_page, ch
 @pytest.fixture
 def user_api_client(settings):
     return UserApiClient(settings.base_url)
+
+@pytest.fixture
+def dynamic_controls_page(page):
+    return DynamicControlsPage(page)
