@@ -6,3 +6,4 @@ repomix-output.xml
 *.db
 allure-results/
 .vscode/
+playwright/.auth/
