@@ -1,6 +1,6 @@
-class CheckoutCompletePage:
-    def __init__(self, page):
-        self.page = page
+from pages.base_page import BasePage
 
+
+class CheckoutCompletePage(BasePage):
     def get_order_result(self):
         return self.page.locator('[data-test="complete-text"]')

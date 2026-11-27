@@ -1,8 +1,8 @@
+from pages.base_page import BasePage
 import allure
-class LoginPage:
-    def __init__(self, page):
-        self.page = page
 
+
+class LoginPage(BasePage):
     def open(self):
         with allure.step(title='Вход на сайт'):
             self.page.goto('https://www.saucedemo.com')
@@ -21,4 +21,3 @@ class LoginPage:
 
     def get_error(self):
         return self.page.locator('[data-test="error"]')
-    
