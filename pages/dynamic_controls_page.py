@@ -1,8 +1,7 @@
-class DynamicControlsPage:
-    SITE_URL = 'https://the-internet.herokuapp.com/dynamic_controls'
+from pages.base_page import BasePage
 
-    def __init__(self, page):
-        self.page = page
+class DynamicControlsPage(BasePage):
+    SITE_URL = 'https://the-internet.herokuapp.com/dynamic_controls'
 
     def open_page(self):
         self.page.goto(self.SITE_URL)

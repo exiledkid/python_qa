@@ -1,13 +1,11 @@
+from pages.base_page import BasePage
 import allure
 
-class ProductsPage:
-    def __init__(self, page):
-        self.page = page
-
+class ProductsPage(BasePage):
     def add_to_cart(self, product_name):
         with allure.step(title=f'Добавление в корзину товара {product_name}'):
             self.page.locator(f'[data-test="add-to-cart-{product_name}"]').click()
-            
+
             allure.attach(
                 body=self.page.screenshot(),
                 name='Страница после добавления товара в корзину',
@@ -21,7 +19,7 @@ class ProductsPage:
     def open_cart(self):
         with allure.step(title='Нажатие на корзину'):
             self.page.locator('[data-test="shopping-cart-link"]').click()
-    
+
     def get_title(self):
         return self.page.locator('[data-test="title"]')
 
